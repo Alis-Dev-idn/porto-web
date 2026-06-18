@@ -1,11 +1,17 @@
 import { useEffect } from 'react'
-import type { Project } from '../data/types'
+import type { Project, ProjectStatus } from '../data/types'
 import { kindLabel, statusLabel } from '../lib/badges'
 import { Icon } from './Icon'
 
 interface ProjectModalProps {
   project: Project | null
   onClose: () => void
+}
+
+const statusTag: Record<ProjectStatus, string> = {
+  live: 'border-transparent bg-accent2/15 text-accent2',
+  internal: 'bg-soft text-body',
+  'coming-soon': 'border-transparent bg-asoft text-accent',
 }
 
 // Detail proyek / case study sebagai modal — PRD §8.6 & §7.
@@ -27,62 +33,70 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const { caseStudy } = project
 
   return (
-    <div className="modal" onClick={onClose}>
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex animate-fade items-end justify-center bg-ink/55 backdrop-blur-sm md:items-center md:p-8"
+    >
       <div
-        className="modal__panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
         onClick={(e) => e.stopPropagation()}
+        className="relative max-h-[92vh] w-full max-w-[640px] animate-rise overflow-y-auto rounded-t-[20px] border border-line bg-card p-[clamp(24px,5vw,40px)] shadow-2xl md:rounded-[20px]"
       >
         <button
           type="button"
-          className="icon-btn modal__close"
           onClick={onClose}
           aria-label="Tutup"
+          className="icon-btn absolute right-4 top-4"
         >
           <Icon name="close" />
         </button>
 
-        <div className="modal__head">
-          <div className="modal__badges">
-            <span className="card__context">{project.contextLabel}</span>
-            <span className={`tag tag--status tag--${project.status}`}>
-              {statusLabel[project.status]}
-            </span>
-            <span className={`kind kind--${project.kind}`}>
-              {kindLabel[project.kind]}
-            </span>
-          </div>
-          <h2 id="modal-title" className="modal__title">
-            {project.name}
-          </h2>
-          <p className="modal__desc">{project.description}</p>
-          {project.url && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="btn btn--primary btn--sm"
-            >
-              Kunjungi Demo <Icon name="external" size={16} />
-            </a>
-          )}
+        <div className="mb-3.5 flex flex-wrap items-center gap-2">
+          <span className="text-[12.5px] font-semibold tracking-wide text-body">
+            {project.contextLabel}
+          </span>
+          <span
+            className={`tag tag-sm font-semibold uppercase tracking-wide ${statusTag[project.status]}`}
+          >
+            {statusLabel[project.status]}
+          </span>
+          <span className="font-mono text-[12.5px] font-semibold text-accent">
+            {kindLabel[project.kind]}
+          </span>
         </div>
 
-        <div className="modal__body">
+        <h2
+          id="modal-title"
+          className="pr-10 text-[clamp(24px,5vw,32px)] font-bold"
+        >
+          {project.name}
+        </h2>
+        <p className="mt-3 leading-relaxed">{project.description}</p>
+        {project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="btn mt-4.5 bg-accent px-4 py-2 text-white hover:brightness-95"
+          >
+            Kunjungi Demo <Icon name="external" size={16} />
+          </a>
+        )}
+
+        <div className="mt-7 flex flex-col gap-5.5">
           {caseStudy.problem && (
             <Block title="Problem Statement">{caseStudy.problem}</Block>
           )}
-
           <Block title="Konteks">{project.contextLabel}</Block>
           <Block title="Peran Saya">{caseStudy.role}</Block>
 
-          <div className="modal__block">
-            <h4 className="modal__block-title">Tech Stack</h4>
-            <div className="modal__stack">
+          <div>
+            <BlockTitle>Tech Stack</BlockTitle>
+            <div className="flex flex-wrap gap-1.5">
               {project.stack.map((s) => (
-                <span key={s} className="tag tag--mono tag--sm">
+                <span key={s} className="tag tag-mono tag-sm">
                   {s}
                 </span>
               ))}
@@ -90,11 +104,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {caseStudy.features && caseStudy.features.length > 0 && (
-            <div className="modal__block">
-              <h4 className="modal__block-title">Key Features</h4>
-              <ul className="modal__list">
+            <div>
+              <BlockTitle>Key Features</BlockTitle>
+              <ul className="flex flex-col gap-2">
                 {caseStudy.features.map((f) => (
-                  <li key={f}>{f}</li>
+                  <li key={f} className="relative pl-5.5 leading-snug">
+                    <span className="absolute left-1 top-[9px] h-1.5 w-1.5 rounded-full bg-accent2" />
+                    {f}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -112,6 +129,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   )
 }
 
+function BlockTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h4 className="mb-2 text-[13px] font-semibold uppercase tracking-wider text-accent">
+      {children}
+    </h4>
+  )
+}
+
 function Block({
   title,
   children,
@@ -120,9 +145,9 @@ function Block({
   children: React.ReactNode
 }) {
   return (
-    <div className="modal__block">
-      <h4 className="modal__block-title">{title}</h4>
-      <p>{children}</p>
+    <div>
+      <BlockTitle>{title}</BlockTitle>
+      <p className="leading-relaxed">{children}</p>
     </div>
   )
 }

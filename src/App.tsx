@@ -9,7 +9,6 @@ import { ProjectModal } from './components/ProjectModal'
 import { Contact } from './components/Contact'
 import { projects } from './data/projects'
 import { useTheme } from './hooks/useTheme'
-import './App.css'
 
 function App() {
   const { theme, toggle } = useTheme()
@@ -23,7 +22,7 @@ function App() {
   return (
     <>
       <Nav theme={theme} onToggleTheme={toggle} />
-      <main>
+      <main className="mx-auto max-w-[1080px] px-[clamp(20px,5vw,48px)]">
         <Hero />
         <About />
         <Skills />

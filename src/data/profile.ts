@@ -24,7 +24,7 @@ export const profile = {
 export const skills: SkillGroup[] = [
   {
     category: 'Frontend',
-    items: ['React', 'TypeScript', 'Vite'],
+    items: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
   },
   {
     category: 'Backend',
@@ -70,19 +70,19 @@ export const contacts: ContactLink[] = [
   {
     label: 'WhatsApp',
     value: 'Chat via WhatsApp',
-    href: 'https://wa.me/6200000000000',
+    href: 'https://wa.me/+6285157853354',
     icon: 'whatsapp',
   },
   {
     label: 'LinkedIn',
-    value: 'in/ibnu-ali-badar',
-    href: 'https://www.linkedin.com/in/ibnu-ali-badar',
+    value: 'in/ibnualibadar',
+    href: 'https://www.linkedin.com/in/ibnualibadar',
     icon: 'linkedin',
   },
   {
     label: 'GitHub',
-    value: 'github.com/ibnu-ali',
-    href: 'https://github.com/ibnu-ali',
+    value: 'github.com/Alis-Dev-idn',
+    href: 'https://github.com/Alis-Dev-idn',
     icon: 'github',
   },
 ]

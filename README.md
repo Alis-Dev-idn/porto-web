@@ -12,10 +12,12 @@ Riwayat perubahan: [`docs/CHANGELOG.md`](docs/CHANGELOG.md). Peta proyek:
 
 - **React 19** + **TypeScript 6**
 - **Vite 8** (dev server & build)
-- CSS murni dengan design tokens (dark/light via `[data-theme]`)
+- **Tailwind CSS v4** (`@tailwindcss/vite`) dengan design token via `@theme`
+  (dark/light otomatis via `[data-theme]`)
 - ESLint + typescript-eslint
+- `sharp` (devDependency) untuk mengolah aset gambar (foto profil & icon)
 
-Tanpa dependency UI/routing tambahan — modal case study & navigasi anchor cukup
+Tanpa dependency routing tambahan — modal case study & navigasi anchor cukup
 untuk MVP (lihat PRD §7 & §10.2).
 
 ## Menjalankan Secara Lokal
@@ -33,19 +35,19 @@ npm run lint     # eslint
 ```
 porto-web/
 ├─ docs/                     # PRD, changelog, route map
-├─ public/                   # aset statis (favicon)
+├─ public/                   # aset statis (favicon, icon-512)
 ├─ src/
 │  ├─ data/                  # ← KONTEN PORTFOLIO (edit di sini)
 │  │  ├─ types.ts            # tipe domain
 │  │  ├─ profile.ts          # identitas, bio, skills, kontak
 │  │  ├─ experience.ts       # riwayat kerja (timeline)
 │  │  └─ projects.ts         # daftar 9 proyek + case study
-│  ├─ components/            # komponen UI per section
+│  ├─ assets/                # foto (hero, avatar) & brand icon
+│  ├─ components/            # komponen UI per section (Tailwind)
 │  ├─ hooks/useTheme.ts      # dark/light mode
 │  ├─ lib/badges.ts          # label badge tipe & status proyek
 │  ├─ App.tsx                # komposisi section
-│  ├─ App.css                # layout & komponen
-│  └─ index.css              # design tokens & base
+│  └─ index.css              # Tailwind + design tokens (@theme) & base
 └─ .github/workflows/deploy.yml  # CI/CD FTPS
 ```
 

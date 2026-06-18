@@ -1,27 +1,37 @@
-/* Design tokens & base — palette terinspirasi brand Monage (PRD §12).
-   Tema dikontrol via [data-theme] di <html> (lihat useTheme). */
+@import 'tailwindcss';
 
-:root {
-  --blue: #1a73e8;
-  --green: #00c896;
-  --ink: #1a1a2e;
+/* Dark mode dikontrol via [data-theme="dark"] di <html> (lihat useTheme). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-  --sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+/* Map design token → utility Tailwind. `inline` membuat utility merujuk ke
+   CSS var, sehingga warna otomatis ganti saat tema berubah.
+   Contoh utility: bg-surface, bg-card, text-head, text-body, border-line,
+   text-accent, bg-asoft, font-mono, animate-bob. */
+@theme inline {
+  --color-surface: var(--bg);
+  --color-soft: var(--bg-soft);
+  --color-card: var(--bg-card);
+  --color-body: var(--text);
+  --color-head: var(--text-h);
+  --color-line: var(--border);
+  --color-line2: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent-2);
+  --color-asoft: var(--accent-soft);
+  --color-ink: var(--ink);
 
-  --radius: 14px;
-  --radius-sm: 9px;
-  --maxw: 1080px;
-  --gutter: clamp(20px, 5vw, 48px);
+  --font-sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
+    monospace;
 
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --radius-card: 14px;
+
+  --animate-bob: bob 2s ease-in-out infinite;
+  --animate-fade: fade 0.2s ease;
+  --animate-rise: rise 0.24s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light (default) */
+/* ---- Palette (brand Monage, PRD §12) ---- */
 :root,
 :root[data-theme='light'] {
   --bg: #ffffff;
@@ -31,15 +41,12 @@
   --text-h: #14151f;
   --border: #e6e9f0;
   --border-strong: #d4d9e4;
-  --accent: var(--blue);
-  --accent-2: var(--green);
+  --accent: #1a73e8;
+  --accent-2: #00c896;
   --accent-soft: rgba(26, 115, 232, 0.1);
-  --shadow: 0 1px 2px rgba(20, 21, 31, 0.04),
-    0 8px 24px -12px rgba(20, 21, 31, 0.18);
-  --shadow-lg: 0 24px 60px -24px rgba(20, 21, 31, 0.28);
+  --ink: #1a1a2e;
 }
 
-/* Dark */
 :root[data-theme='dark'] {
   --bg: #0f1117;
   --bg-soft: #151823;
@@ -51,78 +58,95 @@
   --accent: #4d94ff;
   --accent-2: #2fe0b4;
   --accent-soft: rgba(77, 148, 255, 0.14);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4),
-    0 10px 30px -14px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 30px 70px -30px rgba(0, 0, 0, 0.7);
+  --ink: #1a1a2e;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 84px;
-}
-
-body {
-  margin: 0;
-  font: 400 17px/1.65 var(--sans);
-  letter-spacing: 0.1px;
-  color: var(--text);
-  background: var(--bg);
-  -webkit-tap-highlight-color: transparent;
-}
-
-@media (max-width: 720px) {
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+  }
   body {
-    font-size: 16px;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    letter-spacing: 0.1px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  @media (max-width: 720px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-h);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
-h1,
-h2,
-h3,
-h4 {
-  color: var(--text-h);
-  font-weight: 650;
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  margin: 0;
+/* Primitive yang sering dipakai — tetap Tailwind via @apply. */
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold
+      transition active:translate-y-px;
+  }
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line
+      bg-soft px-2.5 py-1 text-[13px] font-medium text-body whitespace-nowrap;
+  }
+  .tag-mono {
+    @apply font-mono text-[12.5px] tracking-tight;
+  }
+  .tag-sm {
+    @apply px-2 py-0.5 text-[11.5px];
+  }
+  .chip {
+    @apply rounded-full border border-line bg-soft px-3 py-1.5 text-[13px]
+      font-medium text-head transition hover:border-accent hover:text-accent;
+  }
+  .icon-btn {
+    @apply grid h-10 w-10 place-items-center rounded-[10px] border border-line
+      text-head transition hover:border-line2 hover:bg-soft;
+  }
+  .section-num {
+    @apply font-mono text-sm font-semibold text-accent;
+  }
 }
 
-p {
-  margin: 0;
+@keyframes bob {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 8px);
+  }
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
 }
-
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-button {
-  font: inherit;
-  cursor: pointer;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
+@keyframes rise {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
