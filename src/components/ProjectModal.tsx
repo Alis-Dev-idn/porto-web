@@ -35,25 +35,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[100] flex animate-fade items-end justify-center bg-ink/55 backdrop-blur-sm md:items-center md:p-8"
+      className="fixed inset-0 z-[100] flex animate-fade items-center justify-center bg-ink/55 p-4 backdrop-blur-sm md:p-8"
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
         onClick={(e) => e.stopPropagation()}
-        className="relative max-h-[92vh] w-full max-w-[640px] animate-rise overflow-y-auto rounded-t-[20px] border border-line bg-card p-[clamp(24px,5vw,40px)] shadow-2xl md:rounded-[20px]"
+        className="relative flex max-h-[90dvh] w-full max-w-[640px] animate-rise flex-col overflow-hidden rounded-[20px] border border-line bg-card shadow-2xl"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Tutup"
-          className="icon-btn absolute right-4 top-4"
+          className="icon-btn absolute right-3 top-3 z-10 bg-card/80 backdrop-blur"
         >
           <Icon name="close" />
         </button>
 
-        <div className="mb-3.5 flex flex-wrap items-center gap-2">
+        <div className="modal-scroll overflow-y-auto p-[clamp(20px,5vw,40px)]">
+        <div className="mb-3.5 flex flex-wrap items-center gap-2 pr-10">
           <span className="text-[12.5px] font-semibold tracking-wide text-body">
             {project.contextLabel}
           </span>
@@ -123,6 +124,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {caseStudy.impact && (
             <Block title="Hasil / Impact">{caseStudy.impact}</Block>
           )}
+        </div>
         </div>
       </div>
     </div>

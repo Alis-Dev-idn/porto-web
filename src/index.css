@@ -153,10 +153,60 @@
   html {
     scroll-behavior: auto;
   }
+  /* Matikan animasi sepenuhnya — `animation: none` mengembalikan elemen ke
+     state dasarnya (mis. modal translateY 0), sehingga tidak ada residual
+     transform dari keyframe `from`. */
   *,
   *::before,
   *::after {
-    animation-duration: 0.001ms !important;
+    animation: none !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ---- Custom scrollbar (kasus yang tidak bisa di-handle utility Tailwind) ---- */
+
+/* Scrollbar global halaman */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 3px solid var(--bg);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+  border: 3px solid var(--bg);
+  background-clip: padding-box;
+}
+
+/* Scrollbar khusus di dalam modal detail proyek */
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  overscroll-behavior: contain;
+}
+.modal-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 3px solid var(--bg-card);
+  background-clip: padding-box;
+}
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+  border: 3px solid var(--bg-card);
+  background-clip: padding-box;
 }
