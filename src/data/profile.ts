@@ -1,65 +1,63 @@
 import type { ContactLink, SkillGroup } from './types'
 
-// Identitas & ringkasan profesional — PRD §5.
+// Profil profesional Ibnu Ali Badar
+// Merepresentasikan multi-disciplinary engineering: Fullstack Software Development + Embedded Systems / Hardware IoT.
 
 export const profile = {
   name: 'Ibnu Ali Badar',
   alias: 'Badar / Ali',
-  role: 'Full Stack Developer & Software Engineer',
+  role: 'Full Stack Developer & IoT Engineer',
   level: 'Senior Engineer Grade 1',
   tagline:
-    'Full Stack Developer yang juga merancang hardware-nya sendiri.',
-  // Ringkasan profesional (PRD §5.2).
-  bio: `Full Stack Developer & Software Engineer dengan pengalaman membangun sistem end-to-end di sektor kelistrikan dan medical device — mulai dari frontend modern (React, TypeScript), backend (Node.js/Express, Spring Boot), hingga hardware/firmware (ESP32, PlatformIO/C++). Pernah menangani sistem real-time monitoring transmisi tenaga listrik, platform inspeksi aset PLN, integrasi AI untuk deteksi berbasis gambar, hingga merancang sendiri hardware monitoring alat medis (syringe pump & infusion pump) lengkap dengan HMI-nya. Saat ini juga membangun dan menjalankan produk mandiri, Monage — aplikasi manajemen keuangan pribadi yang sudah live dan dipakai pengguna nyata.`,
-  // Highlight angka untuk section About (PRD §8.2).
+    'Menjembatani keanggunan web modern, keandalan arsitektur backend enterprise, dan ketelitian sistem embedded IoT.',
+  bio: `Saya adalah seorang Software Engineer & IoT Developer yang berfokus membangun solusi digital terintegrasi dari hulu ke hilir. Berpengalaman menangani arsitektur frontend modern (React, TypeScript), layanan backend performa tinggi (Spring Boot, Node.js), hingga perancangan firmware mikroprosesor (ESP32, C++). Portofolio saya mencakup platform analisis gangguan transmisi tenaga listrik standar industri (COMTRADE), sistem manajemen inspeksi aset skala besar di lingkungan PLN, integrasi pipeline machine learning, hingga perancangan perangkat keras mandiri untuk alat medis kritis dan sistem presensi IoT realtime. Saya memadukan ketelitian rekayasa sistem dengan kepekaan desain antarmuka guna menghadirkan teknologi yang tangguh, aman, dan intuitif.`,
   stats: [
-    { value: '8+', label: 'Proyek nyata' },
-    { value: '2', label: 'Perusahaan' },
-    { value: '1', label: 'Produk mandiri live' },
-    { value: 'HW+SW', label: 'Software & Hardware' },
+    { value: '10+', label: 'Proyek Selesai' },
+    { value: '2', label: 'Perusahaan Rekayasa' },
+    { value: 'End-to-End', label: 'Arsitektur Fullstack & IoT' },
+    { value: 'HW + SW', label: 'Integrasi Multi-Disiplin' },
   ],
 } as const
 
-// Keahlian per kategori — PRD §5.3.
 export const skills: SkillGroup[] = [
   {
-    category: 'Frontend',
-    items: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+    category: 'Frontend Development',
+    items: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'State Management'],
   },
   {
-    category: 'Backend',
-    items: ['Node.js', 'Express.js', 'Spring Boot (Java)', 'REST API design'],
+    category: 'Backend Architecture',
+    items: ['Spring Boot (Java)', 'Node.js', 'Express.js', 'RESTful API', 'WebSocket'],
   },
   {
-    category: 'Database',
-    items: ['PostgreSQL', 'MongoDB'],
+    category: 'Database & Caching',
+    items: ['PostgreSQL', 'MongoDB', 'IndexedDB / Dexie.js'],
   },
   {
-    category: 'Hardware / IoT / Embedded',
+    category: 'Embedded Systems & IoT',
     items: [
       'ESP32',
-      'PlatformIO + C++',
-      'MQTT',
-      'HMI (LCD)',
-      'Edge AI / on-device',
+      'PlatformIO / C++',
+      'MQTT & WebSocket Bridge',
+      'Device Security & Auth',
+      'HMI & LCD Display',
+      'Edge AI Processing',
     ],
   },
   {
-    category: 'AI / Data',
-    items: ['Python AI pipeline', 'Image-based detection', 'COMTRADE parsing'],
+    category: 'AI Pipeline & Industrial Data',
+    items: ['COMTRADE Parsing', 'Python AI Pipeline', 'Computer Vision Detection'],
   },
   {
-    category: 'Infrastruktur & Tools',
+    category: 'DevOps, Cloud & Tooling',
     items: [
-      'Nginx',
       'GitHub Actions (CI/CD)',
-      'Firebase FCM',
-      'Google OAuth 2.0',
+      'Nginx',
+      'Firebase Cloud Messaging',
+      'OAuth 2.0 & JWT',
     ],
   },
 ]
 
-// Kontak — PRD §8.7. Nilai href bisa disesuaikan saat publish.
 export const contacts: ContactLink[] = [
   {
     label: 'Email',
@@ -75,7 +73,7 @@ export const contacts: ContactLink[] = [
   },
   {
     label: 'LinkedIn',
-    value: 'in/ibnualibadar',
+    value: 'linkedin.com/in/ibnualibadar',
     href: 'https://www.linkedin.com/in/ibnualibadar',
     icon: 'linkedin',
   },

@@ -4,67 +4,86 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* Map design token → utility Tailwind. `inline` membuat utility merujuk ke
-   CSS var, sehingga warna otomatis ganti saat tema berubah.
-   Contoh utility: bg-surface, bg-card, text-head, text-body, border-line,
-   text-accent, bg-asoft, font-mono, animate-bob. */
+   CSS var, sehingga warna otomatis ganti saat tema berubah. */
 @theme inline {
   --color-surface: var(--bg);
   --color-soft: var(--bg-soft);
   --color-card: var(--bg-card);
   --color-body: var(--text);
   --color-head: var(--text-h);
+  --color-muted: var(--text-muted);
   --color-line: var(--border);
   --color-line2: var(--border-strong);
   --color-accent: var(--accent);
   --color-accent2: var(--accent-2);
   --color-asoft: var(--accent-soft);
+  --color-a2soft: var(--accent2-soft);
   --color-ink: var(--ink);
 
-  --font-sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono',
-    monospace;
+  /* Corner Radius Tokens (Standard Rule: Zero Sharp Corners) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
 
-  --radius-card: 14px;
+  /* Typography Fonts */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
 
-  --animate-bob: bob 2s ease-in-out infinite;
-  --animate-fade: fade 0.2s ease;
-  --animate-rise: rise 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Easing Curves */
+  --ease-snappy: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Keyframe Animations */
+  --animate-bob: bob 3.5s ease-in-out infinite;
+  --animate-fade: fade 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-rise: rise 0.26s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---- Palette (brand Monage, PRD §12) ---- */
+/* ---- Color Tokens: Light Mode (Slate & Porcelain) ---- */
 :root,
 :root[data-theme='light'] {
-  --bg: #ffffff;
-  --bg-soft: #f6f8fb;
-  --bg-card: #ffffff;
-  --text: #51566b;
-  --text-h: #14151f;
-  --border: #e6e9f0;
-  --border-strong: #d4d9e4;
-  --accent: #1a73e8;
-  --accent-2: #00c896;
-  --accent-soft: rgba(26, 115, 232, 0.1);
-  --ink: #1a1a2e;
+  --bg: #F8FAFC;               /* Canvas Slate 50 */
+  --bg-soft: #F1F5F9;          /* Secondary Slate 100 */
+  --bg-card: #FFFFFF;          /* Pure White Card */
+  --text: #334155;             /* Body Slate 700 (Contrast 6.5:1) */
+  --text-h: #0F172A;           /* Heading Slate 900 (Contrast 15.8:1) */
+  --text-muted: #64748B;       /* Meta/Caption Slate 500 (Contrast 4.6:1) */
+  --border: #E2E8F0;           /* Subtle Border Slate 200 */
+  --border-strong: #CBD5E1;    /* Strong/Hover Border Slate 300 */
+  --accent: #2563EB;           /* Primary Royal Blue (Contrast 4.6:1) */
+  --accent-soft: rgba(37, 99, 235, 0.08); /* Blue Tint */
+  --accent-2: #0D9488;         /* Secondary Emerald Teal (Contrast 4.7:1) */
+  --accent2-soft: rgba(13, 148, 136, 0.10); /* Teal Tint */
+  --ink: #0A0F1D;              /* Deep Navy Dark Contrast */
 }
 
+/* ---- Color Tokens: Dark Mode (Deep Charcoal Navy) ---- */
 :root[data-theme='dark'] {
-  --bg: #0f1117;
-  --bg-soft: #151823;
-  --bg-card: #171a24;
-  --text: #9aa3b8;
-  --text-h: #f2f4f9;
-  --border: #242838;
-  --border-strong: #313749;
-  --accent: #4d94ff;
-  --accent-2: #2fe0b4;
-  --accent-soft: rgba(77, 148, 255, 0.14);
-  --ink: #1a1a2e;
+  --bg: #0B0F19;               /* Deep Charcoal Canvas */
+  --bg-soft: #111827;          /* Card Secondary Slate 900 */
+  --bg-card: #161F30;          /* Elevated Navy Surface */
+  --text: #94A3B8;             /* Body Slate 400 (Contrast 6.8:1) */
+  --text-h: #F8FAFC;           /* Heading Slate 50 (Contrast 16.5:1) */
+  --text-muted: #64748B;       /* Monospace Dim Slate 500 */
+  --border: #1E293B;           /* Card Framing Slate 800 */
+  --border-strong: #334155;    /* Contrast Ring Slate 700 */
+  --accent: #3B82F6;           /* Primary Vibrant Blue (Contrast 5.4:1) */
+  --accent-soft: rgba(59, 130, 246, 0.15); /* Vibrant Blue Glow */
+  --accent-2: #2DD4BF;         /* Secondary Mint/Teal (Contrast 8.2:1) */
+  --accent2-soft: rgba(45, 212, 191, 0.15); /* Mint Glow */
+  --ink: #F8FAFC;              /* Inverted High-Contrast */
 }
 
 @layer base {
   html {
+    scrollbar-gutter: stable;
     scroll-behavior: smooth;
     scroll-padding-top: 84px;
+    transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 200ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   body {
     margin: 0;
@@ -95,15 +114,44 @@
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
+}
+
+/* Fluid Typography Utilities */
+@utility text-display {
+  font-size: clamp(2.25rem, 4.5vw + 1rem, 3.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+@utility text-h1 {
+  font-size: clamp(1.75rem, 2.5vw + 0.85rem, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+@utility text-h2 {
+  font-size: clamp(1.35rem, 1.8vw + 0.65rem, 1.85rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+@utility text-h3 {
+  font-size: clamp(1.15rem, 1.0vw + 0.55rem, 1.4rem);
+  line-height: 1.3;
+}
+@utility text-lead {
+  font-size: clamp(1.05rem, 0.6vw + 0.75rem, 1.25rem);
+  line-height: 1.6;
+}
+@utility text-body {
+  font-size: clamp(0.95rem, 0.35vw + 0.8rem, 1.05rem);
+  line-height: 1.65;
 }
 
 /* Primitive yang sering dipakai — tetap Tailwind via @apply. */
 @layer components {
   .btn {
-    @apply inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold
-      transition active:translate-y-px;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold
+      transition duration-150 active:translate-y-px;
   }
   .tag {
     @apply inline-flex items-center gap-1.5 rounded-full border border-line
@@ -117,11 +165,11 @@
   }
   .chip {
     @apply rounded-full border border-line bg-soft px-3 py-1.5 text-[13px]
-      font-medium text-head transition hover:border-accent hover:text-accent;
+      font-medium text-head transition duration-150 hover:border-accent hover:text-accent;
   }
   .icon-btn {
-    @apply grid h-10 w-10 place-items-center rounded-[10px] border border-line
-      text-head transition hover:border-line2 hover:bg-soft;
+    @apply grid h-11 w-11 place-items-center rounded-md border border-line
+      text-head transition duration-150 hover:border-line2 hover:bg-soft;
   }
   .section-num {
     @apply font-mono text-sm font-semibold text-accent;
@@ -141,30 +189,36 @@
   from {
     opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes rise {
   from {
-    transform: translateY(24px);
+    transform: translateY(24px) scale(0.96);
     opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: auto !important;
   }
-  /* Matikan animasi sepenuhnya — `animation: none` mengembalikan elemen ke
-     state dasarnya (mis. modal translateY 0), sehingga tidak ada residual
-     transform dari keyframe `from`. */
   *,
   *::before,
   *::after {
-    animation: none !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-/* ---- Custom scrollbar (kasus yang tidak bisa di-handle utility Tailwind) ---- */
+/* ---- Custom scrollbar ---- */
 
 /* Scrollbar global halaman */
 html {

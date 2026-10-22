@@ -1,5 +1,5 @@
-// Kumpulan ikon SVG inline agar tidak bergantung pada library eksternal
-// (menjaga bundle tetap kecil & Lighthouse tinggi — PRD §11).
+// Inline SVG icon renderer (ringan, zero bundle overhead)
+import React from 'react'
 
 export type IconName =
   | 'mail'
@@ -14,7 +14,7 @@ export type IconName =
   | 'cpu'
   | 'code'
 
-interface IconProps {
+export interface IconProps {
   name: IconName
   size?: number
   className?: string

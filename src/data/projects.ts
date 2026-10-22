@@ -1,25 +1,63 @@
 import type { Project } from './types'
 
-// Konten portfolio (9 entri) — PRD §9.
-// Urutan: Monage (live) → Haleyora → Xirka → Monitoring App (coming soon),
-// sesuai rekomendasi PRD §8.5.
+// Konten portofolio rekayasa software & hardware.
+// Menampilkan proyek mandiri serta pengalaman profesional di PT. PLN ICON PLUS dan PT. XIRKA DAMA PERSADA.
 
 export const projects: Project[] = [
+  // Proyek Mandiri Unggulan
+  {
+    slug: 'iot-attendance',
+    name: 'Sistem Presensi IoT Realtime',
+    summary:
+      'Solusi presensi cerdas end-to-end yang menghubungkan node ESP32 dengan web dashboard secara realtime via MQTT Broker & WebSocket dengan keamanan unik per-device.',
+    description:
+      'Sistem presensi terdistribusi yang menghubungkan perangkat fisik ESP32 dengan antarmuka web monitoring secara instan dan aman. Mengimplementasikan protokol MQTT yang dijembatani WebSocket untuk komunikasi data presensi dua arah dengan latensi sub-detik. Dilengkapi tata kelola keamanan ketat di mana setiap node mikrokontroler memiliki kredensial dan token otentikasi unik untuk mencegah spoofing device pada jaringan, serta didukung mekanisme fail-safe caching saat konektivitas terputus.',
+    context: 'independent',
+    contextLabel: 'Mandiri',
+    kind: 'software-hardware',
+    status: 'internal',
+    stack: [
+      'ESP32',
+      'PlatformIO / C++',
+      'MQTT Broker',
+      'WebSocket',
+      'Node.js',
+      'React',
+      'TypeScript',
+      'Device Auth / JWT',
+    ],
+    caseStudy: {
+      problem:
+        'Sistem presensi konvensional sering memicu antrean akibat latensi pembacaan data, serta rentan terhadap kecurangan fisik atau manipulasi payload pada jaringan lokal bila perangkat IoT menggunakan kredensial bersama (shared credentials).',
+      role: 'Fullstack & Embedded IoT Engineer — merancang arsitektur komunikasi broker, firmware C++ pada ESP32, mekanisme otentikasi device terisolasi, serta dashboard monitoring realtime.',
+      features: [
+        'Komunikasi bi-directional realtime berlatensi rendah antara node ESP32 dan web dashboard via MQTT over WebSocket',
+        'Keamanan berbasis isolasi perangkat: setiap modul ESP32 memiliki identitas, secret key, dan otentikasi unik',
+        'Konfirmasi status pencatatan kehadiran langsung secara instan pada layar perangkat',
+        'Mekanisme fail-safe queue: penyimpanan lokal sementara di flash memory saat offline dan sinkronisasi otomatis saat online kembali',
+        'Dashboard administrasi realtime untuk visualisasi riwayat kehadiran dan telemetri koneksi setiap node perangkat',
+      ],
+      challenge:
+        'Mengelola persistensi koneksi socket pada firmware mikrokontroler dengan memori terbatas agar terhindar dari buffer overflow atau memory leak saat jaringan terputus-sambung.',
+      impact:
+        'Membuktikan kompetensi integrasi menyeluruh dari layer hardware fisik hingga web dashboard modern dalam arsitektur realtime yang aman, tangguh, dan dapat diandalkan.',
+    },
+  },
   {
     slug: 'monage',
     name: 'Monage',
     summary:
-      'Aplikasi manajemen keuangan pribadi yang sudah live & dipakai pengguna nyata.',
+      'Aplikasi manajemen finansial pribadi multi-platform dengan pendekatan arsitektur offline-first dan sinkronisasi cerdas.',
     description:
-      'Aplikasi manajemen keuangan pribadi — catat pemasukan, pengeluaran, transfer, anggaran, tabungan, laporan, dan perencanaan bulanan. Tersedia sebagai web (live) dan Android (distribusi manual via Google Drive, belum dirilis di Play Store).',
+      'Aplikasi manajemen keuangan pribadi yang dirancang untuk mempermudah pencatatan transaksi, pengelolaan pos anggaran, tabungan terencana, serta analisis arus kas bulanan. Mengusung arsitektur offline-first yang andal digunakan di kondisi minim sinyal dan tersinkronisasi otomatis saat terhubung kembali ke internet. Dibangun untuk platform web serta paket aplikasi Android.',
     context: 'independent',
     contextLabel: 'Mandiri',
     kind: 'software',
-    status: 'live',
+    status: 'internal',
     stack: [
-      'Vite',
       'React',
       'TypeScript',
+      'Vite',
       'Node.js',
       'React Native',
       'Dexie.js',
@@ -27,223 +65,256 @@ export const projects: Project[] = [
       'Google OAuth',
       'Resend',
     ],
-    url: 'https://monage.my.id',
     caseStudy: {
       problem:
-        'Membangun produk manajemen keuangan pribadi yang berjalan offline-first sekaligus tersinkron, dan dapat didistribusikan sebagai web maupun aplikasi Android.',
-      role: 'Fullstack — arsitektur, frontend, backend, aplikasi Android, hingga deployment & distribusi.',
+        'Kebutuhan aplikasi pencatatan finansial harian yang responsif tanpa jeda loading server, mampu beroperasi penuh tanpa koneksi internet (offline-first), namun tetap dapat menyinkronkan data antar-perangkat secara aman saat online.',
+      role: 'Fullstack Architect & Developer — memimpin perancangan antarmuka pengguna, optimasi database lokal IndexedDB, API backend, hingga otomatisasi pipeline build mobile.',
       features: [
-        'Catatan pemasukan, pengeluaran, dan transfer',
-        'Anggaran, tabungan, laporan, dan perencanaan bulanan',
-        'Mode offline dengan Dexie.js / IndexedDB',
-        'Push notification via Firebase FCM',
-        'Login Google OAuth 2.0 & email via Resend',
-        'CI/CD GitHub Actions untuk build APK/AAB',
+        'Pencatatan transaksi pemasukan, pengeluaran, dan transfer rekening secara instan',
+        'Alokasi anggaran belanja fleksibel dan visualisasi laporan cash flow bulanan',
+        'Penyimpanan lokal tangguh berbasis Dexie.js / IndexedDB (offline-first)',
+        'Notifikasi pengingat pencatatan rutin via Firebase Cloud Messaging',
+        'Autentikasi terpercaya menggunakan Google OAuth 2.0 dan notifikasi email via Resend',
+        'Automasi CI/CD GitHub Actions untuk kompilasi berkas paket Android (APK/AAB)',
       ],
+      challenge:
+        'Menangani sinkronisasi dan resolusi konflik data (conflict resolution) ketika pengguna melakukan perubahan transaksi saat offline dari beberapa perangkat berbeda.',
       impact:
-        'Satu-satunya proyek yang bisa didemokan langsung secara publik — bukti kemampuan end-to-end dari arsitektur sampai distribusi produk nyata yang dipakai pengguna.',
+        'Membuktikan kapabilitas perancangan produk perangkat lunak secara holistik — mulai dari riset pengalaman pengguna, arsitektur offline-first, hingga distribusi aplikasi ke ranah mobile.',
     },
   },
 
-  // PT Haleyora Powerindo (saat ini)
+  // PT. PLN ICON PLUS
   {
     slug: 'tfa',
     name: 'TFA — Transmission Fault Analysis',
     summary:
-      'Real-time monitoring & analisis gangguan pada sistem transmisi tenaga listrik.',
+      'Sistem pemantauan dan analisis gangguan transien sistem transmisi tenaga listrik berstandar industri secara realtime.',
     description:
-      'Sistem real-time monitoring dan analisis gangguan (fault) pada sistem transmisi tenaga listrik.',
+      'Platform analitik realtime untuk mendeteksi dan mengkaji gangguan (fault) pada jaringan transmisi tenaga listrik tegangan tinggi. Sistem mengolah data osilograf transien format standar industri (COMTRADE) yang dihasilkan oleh relai proteksi gardu induk agar dapat divisualisasikan secara intuitif oleh tim dispatcher dan engineer proteksi.',
     context: 'haleyora',
-    contextLabel: 'Haleyora Powerindo',
+    contextLabel: 'PT. PLN ICON PLUS',
     kind: 'software',
     status: 'internal',
-    stack: ['Spring Boot', 'PostgreSQL', 'COMTRADE'],
+    stack: ['Spring Boot', 'PostgreSQL', 'COMTRADE Parser', 'REST API'],
     caseStudy: {
-      role: 'Backend.',
+      problem:
+        'Format rekaman gangguan proteksi (COMTRADE) bersifat biner mentah dan sangat kompleks, menyulitkan tim pemeliharaan dalam mempercepat identifikasi lokasi dan penyebab gangguan kabel transmisi.',
+      role: 'Backend Engineer — membangun backend microservices dengan Spring Boot untuk parsing data COMTRADE biner ke format visual dan merancang API query berkecepatan tinggi.',
       features: [
-        'Data master',
-        'Konversi data format COMTRADE (standar industri untuk data gangguan/transien pada sistem transmisi) agar bisa dibaca & ditampilkan di frontend',
+        'Data master relai transmisi dan konfigurasi gardu induk terpusat',
+        'Engine konversi otomatis berkas COMTRADE (gelombang tegangan & arus saat gangguan) ke data numerik terstruktur',
+        'API pemrosesan event gangguan berlatensi rendah untuk konsumsi visualisasi frontend',
       ],
+      challenge:
+        'Mengoptimasi waktu dekompresi dan parsing berkas biner COMTRADE berukuran besar agar grafik gelombang dapat dirender dalam hitungan milidetik.',
       impact:
-        'Menunjukkan kemampuan menangani data domain-specific yang kompleks (COMTRADE) — niche skill yang jarang dimiliki web developer pada umumnya.',
+        'Menunjukkan keahlian mendalam pada domain spesifik industri energi kelistrikan — kompetensi teknis bernilai tinggi yang menuntut pemahaman mendalam tentang data engineering dan sistem tenaga.',
     },
   },
   {
     slug: 'power-inspect',
     name: 'Power Inspect — Inspeksi Transmisi',
     summary:
-      'Platform manajemen inspeksi & pemeliharaan aset transmisi PLN Icon Plus dengan integrasi multi-platform.',
+      'Platform manajemen inspeksi dan pemeliharaan aset transmisi listrik terintegrasi multi-platform (Web, Mobile, SAP, & SSO).',
     description:
-      'Platform manajemen inspeksi dan pemeliharaan aset transmisi tenaga listrik milik PLN Icon Plus. Berfungsi sebagai pusat integrasi data bagi aplikasi web, aplikasi mobile, serta sistem pendukung (SAP, SSO, dll).',
+      'Sistem informasi enterprise yang mengelola siklus inspeksi rutin dan pemeliharaan aset transmisi tenaga listrik milik PLN Icon Plus. Bertindak sebagai hub integrasi data sentral bagi aplikasi lapangan mobile, portal monitoring web, serta sistem korporat seperti SAP dan Single Sign-On (SSO).',
     context: 'haleyora',
-    contextLabel: 'Haleyora Powerindo',
+    contextLabel: 'PT. PLN ICON PLUS',
     kind: 'software',
     status: 'internal',
-    stack: ['Spring Boot', 'PostgreSQL', 'SAP', 'SSO'],
+    stack: ['Spring Boot', 'PostgreSQL', 'SAP Integration', 'Corporate SSO', 'REST API'],
     caseStudy: {
-      role: 'Backend (API).',
+      problem:
+        'Proses pendataan inspeksi fisik menara dan kabel transmisi di lapangan sebelumnya tersebar di berbagai kanal non-terstandar, memperlambat pembaruan stok suku cadang darurat dan estimasi risiko kerusakan.',
+      role: 'Backend API Engineer — merancang arsitektur API modul ERS (Emergency Response Spare) serta menyambungkan integrasi backend dengan sistem inti enterprise.',
       features: [
-        'API modul ERS (Emergency Response Spare): master komponen, perencanaan, mutasi, stok opname, pengembalian, dan monitoring gudang',
+        'Manajemen modul ERS: master komponen, alokasi suku cadang, mutasi aset, dan stok opname berkala',
+        'Sinkronisasi dua arah dengan sistem inventory enterprise (SAP)',
+        'Autentikasi terpusat karyawan berbasis Corporate SSO',
+        'Pencatatan riwayat kerusakan tower dan rekomendasi tindakan mitigasi',
       ],
+      challenge:
+        'Menjamin konsistensi data transaksi stok opname di tengah tingginya beban permintaan concurrent dari teknisi lapangan secara bersamaan.',
       impact:
-        'Menunjukkan pengalaman bekerja di sistem enterprise besar dengan integrasi multi-platform (web, mobile, SAP, SSO).',
+        'Menunjukkan pengalaman solid dalam menangani rekayasa sistem enterprise berskala nasional dengan integrasi multi-layanan yang ketat terhadap auditabilitas data.',
     },
   },
 
-  // PT Xirka Dama Persada (sebelumnya)
+  // PT. XIRKA DAMA PERSADA
   {
     slug: 'medical',
     name: 'Medical — Syringe & Infusion Pump Monitoring',
     summary:
-      'Sistem wireless untuk monitoring & kontrol jarak jauh alat medis — flagship FE + BE + hardware.',
+      'Sistem telemetri medis wireless untuk monitoring dan kontrol jarak jauh alat pompa infus & suntik berbasis mikrokontroler.',
     description:
-      'Sistem koneksi wireless untuk alat medis (syringe pump & infusion pump, sudah berjalan) — web dapat melakukan monitoring serta start/stop alat secara jarak jauh.',
+      'Sistem telemetri dan kendali nirkabel untuk alat medis kritis (syringe pump dan infusion pump) di ruang rawat rumah sakit. Memungkinkan staf medis memantau laju aliran obat, volume tersisa, status baterai, serta melakukan start/stop alat dari portal monitoring secara realtime dengan standar keandalan tinggi.',
     context: 'xirka',
-    contextLabel: 'Xirka Dama Persada',
+    contextLabel: 'PT. XIRKA DAMA PERSADA',
     kind: 'software-hardware',
     status: 'internal',
     stack: [
-      'Vite',
       'React',
       'TypeScript',
       'Node.js',
       'Express',
       'MongoDB',
       'ESP32',
-      'PlatformIO/C++',
+      'PlatformIO / C++',
+      'Hardware HMI (LCD)',
     ],
     caseStudy: {
-      role: 'Fullstack — FE, BE, dan hardware (HMI berbasis LCD + ESP32, termasuk seluruh fungsi di luar kalkulasi beserta kontrol aktuator).',
+      problem:
+        'Perawat memerlukan mobilitas tinggi dan perlu memantau puluhan pompa infus pasien secara terus-menerus tanpa harus selalu berada di samping ranjang pasien.',
+      role: 'Fullstack & Embedded Engineer — merancang frontend web monitoring, backend service, serta mengembangkan firmware ESP32, HMI layar LCD, dan kendali aktuator pompa.',
       features: [
-        'Monitoring alat medis secara real-time',
-        'Start/stop alat dari web secara jarak jauh',
-        'HMI berbasis LCD + ESP32',
-        'Kontrol aktuator',
+        'Pemantauan status laju aliran cairan dan estimasi waktu habis secara realtime',
+        'Kontrol perintah jarak jauh (start/stop/pause) dengan sistem konfirmasi ganda',
+        'Antarmuka fisik HMI berbasis LCD dan tombol kontrol langsung di unit alat',
+        'Sistem peringatan dini (alarm audio-visual) saat terjadi sumbatan (occlusion) atau baterai lemah',
       ],
+      challenge:
+        'Memastikan latensi komunikasi nirkabel seminimal mungkin dan menjamin mekanisme fail-safe: jika koneksi jaringan putus, aktuator alat harus tetap menjalankan prosedur infus lokal secara aman.',
       impact:
-        'Proyek paling lengkap — satu-satunya yang mencakup FE, BE, DAN hardware/HMI sekaligus di domain medis yang menuntut reliability tinggi.',
+        'Salah satu proyek paling komprehensif — mencakup sinergi penuh antara software web modern, backend realtime, dan rekayasa firmware mikrokontroler di ranah medis yang menuntut akurasi mutlak.',
     },
   },
   {
     slug: 'smartmeter',
-    name: 'SmartMeter',
+    name: 'SmartMeter Panel Surya',
     summary:
-      'Monitoring & visualisasi persebaran device serta hasil panen energi panel surya dalam kWh & rupiah.',
+      'Platform monitoring telemetri arus dan kalkulasi hasil panen energi listrik panel surya berbasis IoT terintegrasi.',
     description:
-      'Monitoring serta visualisasi persebaran device yang terpasang. Data yang dimonitor: arus listrik dan hasil panen energi dari panel surya, dikonversi ke kWh, dihitung sebagai nilai rupiah dan estimasi keuntungan (karena saat itu listrik hasil panel surya bisa dijual ke PLN).',
+      'Sistem monitoring cerdas yang melacak persebaran modul panel surya terpasang di lapangan. Mengukur parameter arus dan tegangan secara periodik, mengonversinya menjadi besaran daya (kWh), serta mengalkulasi nilai ekonomis rupiah dan proyeksi keuntungan dari listrik yang disalurkan ke jaringan listrik.',
     context: 'xirka',
-    contextLabel: 'Xirka Dama Persada',
+    contextLabel: 'PT. XIRKA DAMA PERSADA',
     kind: 'software-hardware',
     status: 'internal',
     stack: [
-      'Vite',
       'React',
       'TypeScript',
+      'Vite',
       'Node.js',
       'Express',
       'MongoDB',
       'ESP32',
+      'IoT Sensor',
     ],
     caseStudy: {
-      role: 'Fullstack + bug fixing pada hardware ESP32.',
+      problem:
+        'Pengguna sistem pembangkit listrik tenaga surya membutuhkan visualisasi transparan mengenai performa panel dan return of investment (ROI) energi secara periodik.',
+      role: 'Fullstack Developer & Hardware Debugger — mengembangkan portal dashboard interaktif dan menyelesaikan optimasi pembacaan sensor pada modul ESP32.',
       features: [
-        'Monitoring arus listrik & hasil panen energi panel surya',
-        'Konversi ke kWh, nilai rupiah, dan estimasi keuntungan',
-        'Visualisasi persebaran device terpasang',
+        'Pengukuran arus, tegangan, dan kalkulasi energi kumulatif secara realtime',
+        'Konversi otomatis daya listrik ke ekuivalen nilai rupiah dan estimasi profit',
+        'Peta persebaran geospasial unit device terpasang beserta status operasionalnya',
       ],
+      impact:
+        'Memberikan kemudahan transparansi data bagi pemilik instalasi panel surya untuk memantau kesehatan operasional dan nilai ekonomis energi secara akurat.',
     },
   },
   {
     slug: 'poopdetector',
-    name: 'PoopDetector',
+    name: 'PoopDetector — Edge AI Vision',
     summary:
-      'Deteksi feses jatuh ke kloset untuk kebutuhan medis — semua logic & web berjalan di ESP32 (edge).',
+      'Perangkat cerdas deteksi kejadian biologis pada kloset medis dengan pemrosesan visi komputer langsung di mikrokontroler ESP32.',
     description:
-      'Device untuk mendeteksi BAB (feses) yang jatuh ke kloset, untuk kebutuhan medis. Device ditempatkan di kloset, mendeteksi setiap kejadian menggunakan kamera, dan hasilnya dikirim langsung ke device Android.',
+      'Perangkat medis cerdas untuk mendeteksi kejadian buang air besar pada pasien rawat inap. Menggunakan modul kamera terpasang di kloset yang memproses algoritma deteksi visual langsung di tingkat mikrokontroler (edge processing), lalu mengirimkan notifikasi instan ke gawai tim medis tanpa memerlukan server backend eksternal.',
     context: 'xirka',
-    contextLabel: 'Xirka Dama Persada',
+    contextLabel: 'PT. XIRKA DAMA PERSADA',
     kind: 'hardware',
     status: 'internal',
-    stack: ['ESP32', 'PlatformIO/C++', 'Kamera', 'Edge processing'],
+    stack: ['ESP32', 'PlatformIO / C++', 'Camera Module', 'Edge Vision', 'Embedded Web'],
     caseStudy: {
-      role: 'Full — logic hingga web, semuanya di dalam ESP32 (edge / on-device).',
+      problem:
+        'Pencatatan rutinitas eliminasi pasien pasca operasi atau lansia membutuhkan privasi tinggi namun tetap membutuhkan ketepatan waktu pelaporan ke tim perawat.',
+      role: 'Embedded Systems Developer — membangun seluruh arsitektur pemrosesan citra on-device, web server lokal, serta transmisi sinyal data ke aplikasi mobile.',
       features: [
-        'Deteksi kejadian poop jatuh menggunakan kamera',
-        'Pemrosesan on-device tanpa backend eksternal',
-        'Web server berjalan langsung di ESP32',
-        'Hasil dikirim ke device Android',
+        'Deteksi citra kejadian secara mandiri di mikroprosesor ESP32 (edge computing)',
+        'Server web mandiri yang di-host langsung dari modul memori ESP32',
+        'Penjagaan privasi maksimal tanpa penyimpanan data foto ke server cloud eksternal',
+        'Pengiriman sinyal notifikasi instan ke aplikasi Android tenaga perawat',
       ],
+      challenge:
+        'Mengakali keterbatasan memori RAM dan komputasi prosesor mikrokontroler agar mampu mengeksekusi algoritma pemrosesan citra tanpa degradasi performa.',
       impact:
-        'Menunjukkan kemampuan edge AI/computer vision murni di hardware dengan resource terbatas — semua logic berjalan langsung di ESP32 tanpa backend eksternal.',
+        'Membuktikan kompetensi komputasi tingkat edge (Edge AI / Vision) murni di tingkat hardware dengan keterbatasan sumber daya komputasi.',
     },
   },
   {
     slug: 'deteksisampah',
-    name: 'DeteksiSampah',
+    name: 'DeteksiSampah — AI Mapping',
     summary:
-      'Deteksi sampah berbasis gambar dengan model AI, summary, dan pemetaan otomatis daerah terpadat.',
+      'Sistem orkestrasi deteksi jenis sampah berbasis citra kecerdasan buatan dengan pemetaan otomatis area titik penumpukan.',
     description:
-      'Sistem deteksi sampah berbasis gambar yang diupload pengguna, diproses oleh model AI (Python), hasil disimpan ke database dan ditampilkan sebagai summary, termasuk pemetaan otomatis daerah dengan jumlah sampah terbanyak (berdasarkan metadata gambar).',
+      'Platform pemilahan sampah digital yang memanfaatkan model AI berbasis citra kiriman warga. Sistem membedah komposisi sampah, menyajikan rekapitulasi data lingkungan, serta memetakan secara otomatis area dengan volume sampah tertinggi berdasarkan ekstraksi metadata lokasi pada foto.',
     context: 'xirka',
-    contextLabel: 'Xirka Dama Persada',
+    contextLabel: 'PT. XIRKA DAMA PERSADA',
     kind: 'software',
     status: 'internal',
     stack: [
-      'Vite',
       'React',
       'TypeScript',
       'Node.js',
       'Express',
-      'Python (AI)',
+      'Python AI Service',
       'MongoDB',
     ],
     caseStudy: {
-      role: 'Fullstack — REST API, FE, dan setup keseluruhan sistem (integrasi AI dikerjakan tim lain).',
+      problem:
+        'Dinas kebersihan kota menghadapi kesulitan mengidentifikasi titik penumpukan sampah liar secara cepat dan mengklasifikasikan jenis sampah untuk kebutuhan daur ulang.',
+      role: 'Fullstack Architect — membangun REST API, dashboard antarmuka web, serta orkestrasi komunikasi service backend ke model inferensi AI Python.',
       features: [
-        'Upload & deteksi sampah berbasis gambar',
-        'Orkestrasi pemrosesan model AI (Python)',
-        'Summary hasil deteksi',
-        'Pemetaan otomatis daerah dengan sampah terbanyak via metadata gambar',
+        'Antarmuka unggah foto responsif dengan pra-pemrosesan metadata gambar',
+        'Integrasi inferensi deteksi jenis sampah ke backend machine learning (Python)',
+        'Dashboard statistik volume sampah dan rekomendasi rute penjemputan dinas',
+        'Visualisasi pemetaan titik tumpukan sampah berbasis data koordinat geografis',
       ],
+      impact:
+        'Menunjukkan kemampuan mengorkestrasikan arsitektur multi-bahasa (TypeScript + Python) dalam satu solusi teknologi terpadu untuk efisiensi operasional tata kota.',
     },
   },
   {
     slug: 'rtd',
-    name: 'RTD',
+    name: 'RTD — IED Connection Manager',
     summary:
-      'Manajemen koneksi IED, mapping attribute, dan monitoring history event.',
+      'Aplikasi manajemen koneksi perangkat elektronik cerdas (IED), mapping atribut, dan pemantauan riwayat telemetri event.',
     description:
-      'Aplikasi manajemen IED (Intelligent Electronic Device) Connection, mapping attribute, dan monitoring history event dari attribute yang telah diatur. Data attribute disimpan di database server IED dan diakses lewat API server IED — menjalankan aplikasi ini memerlukan ekosistem server lengkap (backend server, IED server, database).',
+      'Aplikasi antarmuka pemantauan dan pengelolaan koneksi Intelligent Electronic Device (IED) pada gardu listrik. Mengatur pemetaan atribut sinyal data, menginspeksi status konektivitas perangkat, serta menyajikan audit log riwayat event operasional dari ekosistem server backend dan database terdistribusi.',
     context: 'xirka',
-    contextLabel: 'Xirka Dama Persada',
+    contextLabel: 'PT. XIRKA DAMA PERSADA',
     kind: 'software',
     status: 'internal',
-    stack: ['Vite', 'React', 'TypeScript', 'API server IED'],
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'IED Protocol API'],
     caseStudy: {
-      role: 'Frontend only (dalam tim FE).',
+      problem:
+        'Banyaknya variasi protokol perangkat IED di instalasi gardu menuntut platform antarmuka yang bersih, cepat, dan presisi dalam memetakan ratusan parameter sinyal tanpa kesalahan entri.',
+      role: 'Frontend Engineer — bertanggung jawab atas rancang bangun antarmuka pengguna interaktif, pengelolaan state tabel kompleks, dan integrasi API server IED.',
       features: [
-        'Manajemen IED Connection',
-        'Mapping attribute',
-        'Monitoring history event dari attribute',
+        'Manajemen koneksi sesi aktif multi-device IED',
+        'Antarmuka pemetaan atribut telemetri dan konfigurasi parameter',
+        'Tabel riwayat event berkapasitas besar dengan fitur filter dan pencarian instan',
       ],
+      impact:
+        'Memperlihatkan ketelitian dalam mengimplementasikan antarmuka profesional yang stabil untuk kebutuhan monitoring instrumen kelistrikan presisi tinggi.',
     },
   },
 
-  // Coming soon (mandiri)
+  // Proyek Mandiri (Rencana Pengembangan)
   {
     slug: 'monitoring-app',
-    name: 'Monitoring App (AC/DC Voltage & Power)',
+    name: 'Multi-Module Power Monitor',
     summary:
-      'Aplikasi monitoring multi-modul; modul pertama untuk tegangan AC/DC & daya input/output.',
+      'Rancang bangun sistem telemetri terpadu untuk pengukuran tegangan AC/DC dan efisiensi daya input/output berbasis IoT.',
     description:
-      'Aplikasi monitoring dengan berbagai modul; modul pertama untuk tegangan AC/DC dan daya input/output, modul lainnya menyusul. Saat ini masih dalam tahap PRD/perencanaan.',
+      'Inisiatif rekayasa mandiri sistem pemantau parameter kelistrikan modular. Fase pertama memfokuskan pada modul sensor tegangan AC/DC dan efisiensi daya masukan/keluaran pada catu daya, yang akan terhubung dengan platform pemantauan awan secara komprehensif.',
     context: 'independent',
     contextLabel: 'Mandiri',
     kind: 'software-hardware',
     status: 'coming-soon',
-    stack: ['TBD'],
+    stack: ['ESP32', 'Sensors (AC/DC)', 'React', 'TypeScript', 'IoT Cloud'],
     caseStudy: {
-      role: 'TBD — masih tahap PRD/perencanaan.',
+      role: 'Hardware & Software Designer — tahap riset skematik rangkaian dan perencanaan spesifikasi teknis.',
     },
   },
 ]

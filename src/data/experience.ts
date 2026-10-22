@@ -1,11 +1,10 @@
 import type { ExperienceItem } from './types'
 
-// Riwayat pekerjaan — PRD §6 & §8.4. Periode masih placeholder
-// (lihat PRD §16 nomor 2) dan bisa dilengkapi tanpa mengubah UI.
+// Riwayat pekerjaan profesional.
 
 export const experience: ExperienceItem[] = [
   {
-    company: 'PT Haleyora Powerindo',
+    company: 'PT. PLN ICON PLUS',
     role: 'Senior Engineer Grade 1 — Backend (Spring Boot + PostgreSQL)',
     period: 'Saat ini',
     current: true,
@@ -14,7 +13,7 @@ export const experience: ExperienceItem[] = [
     highlights: ['tfa', 'power-inspect'],
   },
   {
-    company: 'PT Xirka Dama Persada',
+    company: 'PT. XIRKA DAMA PERSADA',
     role: 'Full Stack Developer / Software Engineer (FE, BE & Hardware)',
     period: 'Sebelumnya',
     current: false,
