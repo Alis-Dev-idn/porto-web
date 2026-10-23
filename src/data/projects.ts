@@ -15,7 +15,42 @@ export const projects: Project[] = [
     context: 'independent',
     contextLabel: 'Mandiri',
     kind: 'software-hardware',
-    status: 'internal',
+    status: 'live',
+    url: 'https://demo-absensi.alisdev.my.id',
+    coverImage: './projects/absensi/dashboard.png',
+    gallery: [
+      {
+        src: './projects/absensi/dashboard.png',
+        title: 'Dashboard Monitoring & Telemetri IoT',
+        caption:
+          'Menampilkan log tap kartu realtime, status perangkat online 4/6, uptime 99.98%, dan kartu metrik grup/pengguna.',
+        isFeatured: true,
+      },
+      {
+        src: './projects/absensi/terminal-cli.png',
+        title: 'Interactive Virtual Terminal CLI',
+        caption:
+          'Konsol terminal virtual berbasis MQTT di web untuk diagnosa langsung perangkat hardware ESP32 (status, ip a, wifi scan).',
+      },
+      {
+        src: './projects/absensi/device-detail.png',
+        title: 'Detail Node Terminal ESP32 & NFC Pairing',
+        caption:
+          'Panel inspeksi sinyal Wi-Fi (-58 dBm), uptime perangkat, RAM bebas, serta kontrol registrasi kartu fisik NFC/RFID.',
+      },
+      {
+        src: './projects/absensi/hierarchy.png',
+        title: 'Manajemen Hierarki Organisasi',
+        caption:
+          'Struktur navigasi multi-level (Daerah → Desa → Kelompok → Sub-kelompok).',
+      },
+      {
+        src: './projects/absensi/events.png',
+        title: 'Penjadwalan Acara & Presensi Kerja',
+        caption:
+          'Kalender dan daftar acara presensi terintegrasi beserta status aktif/terjadwal.',
+      },
+    ],
     stack: [
       'ESP32',
       'PlatformIO / C++',
@@ -53,7 +88,48 @@ export const projects: Project[] = [
     context: 'independent',
     contextLabel: 'Mandiri',
     kind: 'software',
-    status: 'internal',
+    status: 'live',
+    url: 'https://demo-monage.alisdev.my.id',
+    coverImage: './projects/monage/dashboard.png',
+    gallery: [
+      {
+        src: './projects/monage/dashboard.png',
+        title: 'Dashboard Ringkasan Finansial & Cashflow',
+        caption:
+          'Ringkasan saldo, mutasi masuk/keluar bulan berjalan, dan grafik tren arus kas harian.',
+        isFeatured: true,
+      },
+      {
+        src: './projects/monage/transactions.png',
+        title: 'Riwayat Mutasi & Filter Transaksi',
+        caption:
+          'Daftar transaksi terperinci dengan filter kategori dan akun perbankan/e-wallet.',
+      },
+      {
+        src: './projects/monage/wallets.png',
+        title: 'Analisis Saldo Rekening & Grafik Akun',
+        caption:
+          'Grafik fluktuasi saldo rekening perbankan (BCA Utama) dari waktu ke waktu.',
+      },
+      {
+        src: './projects/monage/budgeting.png',
+        title: 'Budgeting & Monitoring Batas Anggaran',
+        caption:
+          'Penetapan dan pemantauan batas pengeluaran bulanan per pos anggaran kategori belanja.',
+      },
+      {
+        src: './projects/monage/entities.png',
+        title: 'Pemisahan Multi-Entitas Pembukuan',
+        caption:
+          'Fitur pembukuan terisolasi untuk keuangan Pribadi, Bisnis (POS/Kasir), maupun Keluarga.',
+      },
+      {
+        src: './projects/monage/meal-planner.png',
+        title: 'Perencanaan Belanja Bulanan & Meal Plan',
+        caption:
+          'Modul perencanaan anggaran harian, daftar belanja mingguan, dan kalkulasi estimasi pengeluaran.',
+      },
+    ],
     stack: [
       'React',
       'TypeScript',

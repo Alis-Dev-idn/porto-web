@@ -13,6 +13,8 @@ export type IconName =
   | 'close'
   | 'cpu'
   | 'code'
+  | 'chevron-left'
+  | 'chevron-right'
 
 export interface IconProps {
   name: IconName
@@ -63,6 +65,8 @@ const paths: Record<IconName, React.ReactNode> = {
     </>
   ),
   code: <path d="m16 18 6-6-6-6M8 6l-6 6 6 6" />,
+  'chevron-left': <path d="m15 18-6-6 6-6" />,
+  'chevron-right': <path d="m9 18 6-6-6-6" />,
 }
 
 const filled = new Set<IconName>(['whatsapp', 'linkedin', 'github', 'moon'])

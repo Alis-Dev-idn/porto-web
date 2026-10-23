@@ -24,6 +24,13 @@ export interface CaseStudy {
   impact?: string
 }
 
+export interface ProjectMedia {
+  src: string
+  title: string
+  caption: string
+  isFeatured?: boolean
+}
+
 export interface Project {
   slug: string
   name: string
@@ -37,8 +44,12 @@ export interface Project {
   status: ProjectStatus
   /** Badge tech stack. */
   stack: string[]
-  /** Tautan demo publik (hanya Monage). */
+  /** Tautan demo publik interaktif. */
   url?: string
+  /** Foto cover utama untuk kartu proyek. */
+  coverImage?: string
+  /** Koleksi media tangkapan layar untuk showcase galeri modal. */
+  gallery?: ProjectMedia[]
   caseStudy: CaseStudy
 }
 
